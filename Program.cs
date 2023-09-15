@@ -18,12 +18,15 @@ namespace OptimizationProcess
 
             timer.Start();
 
+            var itemStockResults = new Dictionary<string, int>();
+
             var sales = data.getSales();
             while (sales.MoveNext())
             {
                 var sale = sales.Current;
 
-                var stock = data.getItemStock(sale.item);
+                //var stock = data.getItemStock(sale.item);
+                var stock = Optimizer.optimizeGetItemStock(itemStockResults, sale.item, data);
 
                 data.insertItemPBI(sale.item, sale.price, stock);
 
